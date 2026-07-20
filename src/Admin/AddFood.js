@@ -7,53 +7,55 @@ function AddFood() {
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [available, setAvailable] = useState(true);
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (!name || !description || !price || !image) {
-      setError("All fields including image are required.");
-      return;
-    }
-
-    setError("");
-    setLoading(true);
-
-    // ✅ Properly build FormData
-    const formData = new FormData();
-    formData.append("name", name);
-    formData.append("description", description);
-    formData.append("price", price);
-    formData.append("available", available);
- formData.append("img", image);
 
 
-    try {
-      const res = await api.post("/foods/add-item", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-      alert("✅ Food added successfully!");
-      console.log("Server response:", res.data);
+  if (!name || !description || !price || !image) {
+    setError("All fields are required.");
+    return;
+  }
 
-      setName("");
-      setDescription("");
-      setPrice("");
-      setAvailable(true);
-      setImage(null);
-    } catch (err) {
-      console.error("Error adding food:", err.response?.data || err.message);
-      setError("❌ Failed to add food.");
-    } finally {
-      setLoading(false);
-    }
-  };
+  setError("");
+  setLoading(true);
 
+
+  try {
+    const res = await api.post("/foods/add-item", {
+      name,
+      description,
+      price,
+      available,
+      img: image,
+    });
+
+  setTimeout(() => {
+    alert("✅ Food added successfully!")
+    console.log(res.data);
+    
+  }, 1000);
+
+  
+    
+
+
+    setName("");
+    setDescription("");
+    setPrice("");
+    setAvailable(true);
+    setImage("");
+  } catch (err) {
+    console.error(err.response?.data || err.message);
+    setError("❌ Failed to add food.");
+  } finally {
+    setLoading(false);
+  }
+};
   return (
     <div className="container mt-5">
       <h2>Add Food</h2>
@@ -102,15 +104,16 @@ function AddFood() {
         </div>
 
         <div className="mb-3">
-          <label className="form-label">Image</label>
-          <input
-            type="file"
-            className="form-control"
-            accept="image/*"
-            onChange={(e) => setImage(e.target.files[0])}
-            required
-          />
-        </div>
+   <label className="form-label">Image URL</label>
+  <input
+    type="text"
+    className="form-control"
+    placeholder="https://example.com/image.jpg"
+    value={image}
+    onChange={(e) => setImage(e.target.value)}
+    required
+  />
+</div>
 
         <button type="submit" className="btn btn-primary" disabled={loading}>
           {loading ? "Adding..." : "Add Food"}

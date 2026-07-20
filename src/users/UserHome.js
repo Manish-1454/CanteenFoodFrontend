@@ -98,7 +98,7 @@ function UserDashboard() {
                   <>
                     <img
                         src={
-                                         mostOrderedFood.img? `http://localhost:5000${mostOrderedFood.img}` : backupimg
+                                         mostOrderedFood.img? mostOrderedFood.img : backupimg
                                        }
                       alt={mostOrderedFood.name}
                       className="img-fluid rounded mb-2"
@@ -133,7 +133,7 @@ function UserDashboard() {
                   >
                     <img
                        src={
-                                         food.img? `http://localhost:5000${food.img}` : backupimg
+                                         food.img? food.img : backupimg
                                        }
                       alt={food.name}
                       className="img-fluid rounded mb-1"

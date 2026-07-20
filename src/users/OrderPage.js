@@ -81,7 +81,7 @@ const OrderPage = () => {
                 <div className="card h-100 shadow-sm">
                   <img
                     s src={
-                                        food.img? `http://localhost:5000${food.img}` : backupimg
+                                        food.img? `food.img${food.img}` : backupimg
                                       }
                     className="card-img-top"
                     alt={food.name}

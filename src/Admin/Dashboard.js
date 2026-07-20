@@ -57,7 +57,7 @@ export default function TodayDashboard() {
                 {/* Food Image */}
                 <img
                   src={
-                    food.img ? `http://localhost:5000${food.img}` : backupimg
+                    food.img ? food.img : backupimg
                   }
                   alt={food.name}
                   className="card-img-top"
